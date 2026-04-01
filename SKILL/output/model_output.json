@@ -1,0 +1,21 @@
+{
+  "company": "ABBOTT LABORATORIES",
+  "cik": 1800,
+  "risk_score": 62,
+  "risk_level": "Medium",
+  "drivers": [
+    "Low profit margin",
+    "Moderate leverage"
+  ],
+  "anomaly": {
+    "is_anomaly": 0,
+    "anomaly_score": 0.05
+  },
+  "validation": {
+    "agreement": false,
+    "stability_score": 0.72,
+    "anomaly_strength": 0.12,
+    "confidence_score": 68.5,
+    "final_decision": "Medium Risk"
+  }
+}

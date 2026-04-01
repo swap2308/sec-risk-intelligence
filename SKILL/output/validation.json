@@ -1,0 +1,11 @@
+{
+  "status": "success",
+  "row_count": 1200,
+  "column_count": 10,
+  "null_percentage": {
+    "revenue": 0.02,
+    "net_income": 0.01
+  },
+  "warnings": [],
+  "errors": []
+}
