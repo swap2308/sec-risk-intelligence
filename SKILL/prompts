@@ -1,0 +1,4 @@
+----
+Sample prompts: Test the skill with at least three scenarios. This can be two separate datasets and instructions given to skill to run. Or 
+one successful scenarios and two failure scenarios. For example, bad data or missing information, which the SKILL 
+identifies and explains in detail in response to the user. 
