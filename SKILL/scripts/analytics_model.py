@@ -62,7 +62,7 @@ def compute_features(df):
 
 def prepare_m_score_features(df):
     # Ensure data is sorted by Company (CIK) and Date
-    df = df.sort_values(['cik', 'report_date'])
+    df = df.sort_values(['cik', 'ddate'])
     
     # Calculate Year-over-Year (t / t-1) Ratios
     # DSRI: Days Sales in Receivables Index
