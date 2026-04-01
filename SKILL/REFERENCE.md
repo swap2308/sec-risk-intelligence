@@ -134,7 +134,7 @@ Captures direction of business momentum (growth vs decline).
 
 ## Method
 
-Isolation Forest algorithm
+Isolation Forest algorithm: An Isolation Forest is an unsupervised machine learning algorithm used for anomaly detection. Unlike most anomaly detection methods that try to define "normal" behavior and then flag anything that doesn't fit, Isolation Forests focus on identifying anomalies directly.
 
 ---
 
