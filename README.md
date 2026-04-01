@@ -1,6 +1,6 @@
-# 📊 SEC Financial Risk Intelligence Agent
+#  SEC Financial Risk Intelligence Agent
 
-## 🚀 Overview
+##  Overview
 
 The **SEC Financial Risk Intelligence Agent** is an end-to-end analytics system that evaluates company financial health using structured financial data.
 It applies feature engineering, anomaly detection, rule-based scoring, and model validation to generate explainable risk insights and a professional report.
@@ -9,7 +9,7 @@ This project follows a **deterministic analytics pipeline** and is designed as a
 
 ---
 
-## 🎯 Objective
+##  Objective
 
 To analyze company financial data and:
 
@@ -21,7 +21,7 @@ To analyze company financial data and:
 
 ---
 
-## 📁 Project Structure
+##  Project Structure
 
 ```plaintext
 sec-risk-intelligence/
@@ -69,7 +69,7 @@ The dataset contains financial information derived from SEC filings.
 
 ---
 
-## ⚙️ Analytics Pipeline
+##  Analytics Pipeline
 
 The system follows a structured 6-stage workflow:
 
@@ -149,7 +149,7 @@ Generates a professional HTML report including:
 
 ---
 
-## 📦 Outputs
+##  Outputs
 
 | File                | Description           |
 | ------------------- | --------------------- |
@@ -159,7 +159,7 @@ Generates a professional HTML report including:
 
 ---
 
-## ▶️ How to Run
+##  How to Run
 
 ### Run Full Pipeline
 
@@ -200,7 +200,7 @@ python scripts/report_generator.py \
 
 ---
 
-## 📈 Sample Output
+##  Sample Output
 
 ### Risk Summary
 
@@ -215,7 +215,7 @@ python scripts/report_generator.py \
 
 ---
 
-## 🧠 Key Features
+##  Key Features
 
 * Deterministic analytics pipeline
 * Multi-model comparison
@@ -226,7 +226,7 @@ python scripts/report_generator.py \
 
 ---
 
-## ⚠️ Limitations
+##  Limitations
 
 * Based only on financial data
 * No market or sentiment data
@@ -235,7 +235,7 @@ python scripts/report_generator.py \
 
 ---
 
-## 🔮 Future Enhancements
+##  Future Enhancements
 
 * NLP analysis of SEC filings (MD&A)
 * Market data integration
@@ -244,7 +244,7 @@ python scripts/report_generator.py \
 
 ---
 
-## 🏁 Conclusion
+##  Conclusion
 
 This project demonstrates a **production-style analytics workflow** combining financial modeling, anomaly detection, and explainable AI to generate actionable business insights.
 
