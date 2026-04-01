@@ -56,32 +56,56 @@ def compute_features(df):
     df['revenue_trend'] = df.groupby('cik')['revenue'].pct_change().rolling(3).mean().reset_index(level=0, drop=True)
 
     return df
+# -----------------------------
+# Calculate M-Score
+# -----------------------------
 
-
+def prepare_m_score_features(df):
+    # Ensure data is sorted by Company (CIK) and Date
+    df = df.sort_values(['cik', 'report_date'])
+    
+    # Calculate Year-over-Year (t / t-1) Ratios
+    # DSRI: Days Sales in Receivables Index
+    df['dsri'] = (df['receivables'] / df['revenue']) / \
+                 (df.groupby('cik')['receivables'].shift(1) / df.groupby('cik')['revenue'].shift(1))
+    
+    # GMI: Gross Margin Index
+    df['prev_gm'] = (df.groupby('cik')['revenue'].shift(1) - df.groupby('cik')['cogs'].shift(1)) / df.groupby('cik')['revenue'].shift(1)
+    df['curr_gm'] = (df['revenue'] - df['cogs']) / df['revenue']
+    df['gmi'] = df['prev_gm'] / df['curr_gm']
+    
+    # SGI: Sales Growth Index
+    df['sgi'] = df['revenue'] / df['groupby']('cik')['revenue'].shift(1)
+    
+    # TATA: Total Accruals to Total Assets (The "Quality of Earnings" check)
+    # Formula: (Income from Cont. Ops - Cash Flow from Ops) / Total Assets
+    df['tata'] = (df['net_income'] - df['cash_flow']) / df['assets']
+    
+    return df.dropna(subset=['dsri', 'gmi', 'sgi', 'tata'])
 # -----------------------------
 # Anomaly Detection
 # -----------------------------
 def detect_anomalies(df):
-    features = [
-        'revenue', 'net_income', 'debt', 'equity',
-        'cash_flow', 'assets', 'liabilities',
-        'profit_margin', 'debt_to_equity', 'revenue_growth'
-    ]
-
-    features = [col for col in features if col in df.columns]
-
+    # 1. Feature Selection: Focus on the Indices, not raw dollars
+    features = ['dsri', 'gmi', 'sgi', 'tata', 'debt_to_equity', 'profit_margin']
+    
+    # 2. Cleaning (Your existing logic is good here)
     X = df[features].replace([np.inf, -np.inf], np.nan)
     X = X.fillna(X.median())
-
+    
+    # 3. Scaling
     scaler = StandardScaler()
     X_scaled = scaler.fit_transform(X)
-
-    model = IsolationForest(n_estimators=150, contamination=0.1, random_state=42)
-
+    
+    # 4. Model: Using a lower contamination for SEC fraud (usually < 1%)
+    model = IsolationForest(n_estimators=200, contamination=0.02, random_state=42)
+    
     df['anomaly_flag'] = model.fit_predict(X_scaled)
     df['anomaly_score'] = model.decision_function(X_scaled)
-
+    
     return df
+
+
 
 
 # -----------------------------
@@ -203,6 +227,7 @@ def main():
         df = compute_features(df)
 
         # Anomaly Detection
+        df=prepare_m_score_features(df)
         df = detect_anomalies(df)
 
         # Risk Model
