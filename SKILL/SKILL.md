@@ -1,12 +1,22 @@
 ---
-name: sec-risk-intelligence
+name:  SEC Financial Risk Intelligence with M-Score Integration
 description: "Analyze company financial data to assess financial risk using feature engineering, anomaly detection, rule-based scoring, and multi-model validation. Produces structured outputs and a professional report."
 
 ---
 
-# SEC Risk Intelligence Skill
+#  SEC Financial Risk Intelligence with M-Score Integration
 
-This skill evaluates company financial health using structured financial data and a full analytics pipeline including validation, feature engineering, multi-model analysis, validation, and report generation.
+This skill evaluates **financial risk and potential earnings manipulation** of a company using structured financial data derived from SEC filings.
+
+It combines:
+
+- Deterministic financial ratio analysis  
+- Beneish M-Score (fraud detection signals)  
+- Machine learning (Isolation Forest anomaly detection)  
+- Rule-based risk scoring  
+- Model validation and confidence scoring  
+
+The skill is designed to be **auditable, explainable, and production-ready**
 
 ---
 
@@ -146,6 +156,15 @@ Model 1: Rule-Based Risk Scoring
 Model 2: Isolation Forest Anomaly Detection
 
 ---
+Core Financial Features
+
+| Feature | Formula |
+|--------|--------|
+| Revenue Growth | (Revenue - Prev Revenue) / Prev Revenue |
+| Profit Margin | Net Income / Revenue |
+| Debt-to-Equity | Debt / Equity |
+| Cash Flow Ratio | Cash Flow / Revenue |
+| Liability Ratio | Liabilities / Assets |
 
 ### Risk Model Logic
 
