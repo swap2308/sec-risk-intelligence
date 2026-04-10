@@ -75,157 +75,73 @@ Captures direction of business momentum (growth vs decline).
 
 ---
 
-# 2. Risk Scoring Framework
-
-## Risk Levels
-
-| Score Range | Risk Level  |
-| ----------- | ----------- |
-| 0–39        | Low Risk    |
-| 40–69       | Medium Risk |
-| 70–100      | High Risk   |
 
 ---
 
-## Risk Drivers
+### 2. Feature Engineering
+Derives key financial indicators:
 
-### Profitability Risk
-
-* Profit margin < 0 → Severe risk
-* Profit margin < 5% → Moderate risk
-
----
-
-### Growth Risk
-
-* Revenue growth < 0 → Negative trend
-* Revenue growth < -10% → Severe decline
+- Revenue Growth  
+- Profit Margin  
+- Debt-to-Equity  
+- Cash Flow Ratio  
+- Liability Ratio  
+- Revenue Volatility & Trend  
 
 ---
 
-### Leverage Risk
+### 3. M-Score (Fraud Detection Signals)
+Implements Beneish M-Score proxy variables:
 
-* Debt-to-equity > 2 → High risk
-* Debt-to-equity > 3 → Critical risk
+- DSRI (Receivables Index)  
+- GMI (Gross Margin Index)  
+- SGI (Sales Growth Index)  
+- TATA (Accruals to Assets)  
 
----
-
-### Cash Flow Risk
-
-* Negative operating cash flow → High risk
-* Low cash flow ratio (<5%) → Weak sustainability
+These features enhance **fraud and earnings manipulation detection**.
 
 ---
 
-### Balance Sheet Risk
-
-* Equity ≤ 0 → Critical financial distress
-
----
-
-### Stability Risk
-
-* High volatility (>0.3) → Unstable performance
-* Negative trend → Deterioration signal
+### 4. Anomaly Detection (ML Model)
+- Algorithm: Isolation Forest  
+- Detects unusual financial behavior  
+- Trained on full dataset for better context  
+- Outputs:
+  - Anomaly Flag  
+  - Anomaly Score  
 
 ---
 
-# 3. Anomaly Detection Framework
+### 5. Rule-Based Risk Scoring
+Deterministic scoring based on:
 
-## Method
+- Profitability  
+- Growth trends  
+- Leverage  
+- Liquidity  
+- Solvency  
+- Volatility  
+- Anomaly signals  
 
-Isolation Forest algorithm: An Isolation Forest is an unsupervised machine learning algorithm used for anomaly detection. Unlike most anomaly detection methods that try to define "normal" behavior and then flag anything that doesn't fit, Isolation Forests focus on identifying anomalies directly.
-
----
-
-## Interpretation
-
-| Output | Meaning                             |
-| ------ | ----------------------------------- |
-| -1     | Anomaly (unusual financial pattern) |
-| 1      | Normal                              |
-
----
-
-## Business Meaning
-
-Anomalies may indicate:
-
-* Sudden revenue spikes/drops
-* Accounting irregularities
-* Structural business change
+Outputs:
+- Risk Score (0–100)  
+- Risk Drivers (explainability)
 
 ---
 
-# 4. Multi-Model Comparison Framework
+### 6. Model Validation Framework
+Combines outputs from ML and rule-based models:
 
-The system uses two analytical approaches:
+- Agreement check  
+- Stability score  
+- Anomaly strength  
+- Confidence score  
 
-1. Rule-Based Risk Scoring  
-2. Isolation Forest Anomaly Detection  
-
-
-## 4.1 Model Agreement
-
-Compare:
-
-* Rule-based risk score
-* Anomaly detection result
-
----
-
-## 4.2 Stability
-
-Measured using revenue volatility
-
-* Low volatility → stable business
-* High volatility → uncertain performance
-
----
-
-## 4.3 Confidence Score
-
-Factors:
-
-* Data sufficiency
-* Model agreement
-* Stability
-* Anomaly strength
-
----
-## Decision Logic
-
-- If both models indicate high risk → Confirmed risk  
-- If only rule model indicates risk → Financial risk  
-- If only anomaly model indicates risk → Hidden or emerging risk  
-- If neither → Stable  
-
-The final decision is based on combined interpretation of both models.
-
-# 5. Interpretation Framework
-
-## Low Risk
-
-* Stable revenue growth
-* Healthy margins
-* Controlled leverage
-
----
-
-## Medium Risk
-
-* Moderate leverage
-* Weak margins
-* Inconsistent growth
-
----
-
-## High Risk
-
-* Negative profitability
-* High debt burden
-* Declining revenue
-* Negative equity
+Final decision labels:
+- Confirmed Risk  
+- Financial Risk  
+- Hidden Risk  
+- Stable  
 
 ---
 
