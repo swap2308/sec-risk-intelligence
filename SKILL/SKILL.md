@@ -45,6 +45,8 @@ If no dataset is provided, the system uses the default dataset.
 | debt        | float  | Total debt          |
 | equity      | float  | Shareholder equity  |
 | cash_flow   | float  | Operating cash flow |
+| receivables   | float  | receivables |
+| cogs   | float  | cogs |
 | name        | string | Company name        |
 
 ---
