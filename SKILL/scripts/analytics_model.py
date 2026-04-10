@@ -98,7 +98,7 @@ def prepare_m_score_features(df: pd.DataFrame) -> pd.DataFrame:
 # ─────────────────────────────────────────────────────────────
 def detect_anomalies(df_full: pd.DataFrame, df_target: pd.DataFrame):
     """
-    FIX 5 (partial): Train Isolation Forest on the full dataset for a rich
+     Train Isolation Forest on the full dataset for a rich
     reference distribution; score only the target company's rows.
 
     Returns df_target with anomaly_flag and anomaly_score columns added.
@@ -133,7 +133,7 @@ def compute_risk_score(df: pd.DataFrame):
     """
     Rule-based risk scoring on the latest period of the target company.
 
-    FIX 3: Solvency check (liabilities > assets) is now guarded with
+    Solvency check (liabilities > assets) is now guarded with
             pd.notna() so a NaN in either column does not raise TypeError.
     """
     df     = df.sort_values('ddate')
@@ -199,7 +199,7 @@ def validate_models(df: pd.DataFrame, risk_score: int) -> dict:
     """
     Compare rule-based and anomaly-detection bands; compute confidence.
 
-    FIX 4: volatility NaN is handled before max(0, 1 - v) so stability
+     volatility NaN is handled before max(0, 1 - v) so stability
             never silently becomes NaN.
     """
     latest        = df.sort_values('ddate').iloc[-1]
