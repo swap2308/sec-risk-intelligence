@@ -5,7 +5,21 @@ def generate_insights(features, rule_score, drivers, validation, anomaly_signal)
     insights = {}
 
     latest = features.iloc[-1]
-
+    # -----------------------------
+    # M-Score (Earnings Manipulation Risk)
+    # -----------------------------
+    m_score = (
+        0.9 * latest.get("dsri", 0) +
+        0.5 * latest.get("gmi", 0) +
+        0.7 * latest.get("sgi", 0) +
+        1.2 * latest.get("tata", 0)
+    )
+    
+    m_score_risk = (
+        "High Manipulation Risk 🔴" if m_score > 2.5 else
+        "Moderate Manipulation Risk 🟡" if m_score > 1.5 else
+        "Low Manipulation Risk 🟢"
+    )
     # -----------------------------
     # Financial Summary
     # -----------------------------
@@ -27,6 +41,13 @@ def generate_insights(features, rule_score, drivers, validation, anomaly_signal)
             "Low Risk 🟢"
         ),
         "confidence_score": validation["confidence_score"]
+    }
+    # -----------------------------
+    # M-Score Insight
+    # -----------------------------
+    insights["m_score"] = {
+        "value": float(m_score),
+        "risk_level": m_score_risk
     }
 
     # -----------------------------
@@ -55,6 +76,10 @@ def generate_insights(features, rule_score, drivers, validation, anomaly_signal)
 
     if latest.get("revenue_growth", 0) < 0:
         interpretation.append("Revenue is declining")
+    if m_score > 2.5:
+        interpretation.append("Potential earnings manipulation risk detected")
+    elif m_score > 1.5:
+        interpretation.append("Some indicators of earnings quality concerns")
 
     if not interpretation:
         interpretation.append("Company shows stable financial performance")
