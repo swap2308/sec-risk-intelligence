@@ -78,13 +78,13 @@ def prepare_m_score_features(df: pd.DataFrame) -> pd.DataFrame:
     df['curr_gm'] = (df['revenue'] - df['cogs']) / (df['revenue'] + 1e-6)
     df['gmi']     = df['prev_gm'] / (df['curr_gm'] + 1e-6)
 
-    # SGI – Sales Growth Index  ← FIX 1: was df['groupby']('cik')[...]
+    # SGI – Sales Growth Index  
     df['sgi'] = df['revenue'] / (grp['revenue'].shift(1) + 1e-6)
 
     # TATA – Total Accruals to Total Assets
     df['tata'] = (df['net_income'] - df['cash_flow']) / (df['assets'] + 1e-6)
 
-    # FIX 2: fill NaNs with column medians instead of dropping rows
+    
     for col in ['dsri', 'gmi', 'sgi', 'tata']:
         median_val = df[col].replace([np.inf, -np.inf], np.nan).median()
         df[col] = df[col].replace([np.inf, -np.inf], np.nan).fillna(median_val)
