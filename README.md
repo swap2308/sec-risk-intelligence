@@ -1,4 +1,4 @@
-# SEC Financial Risk Intelligence with M-Score Integration
+# SEC Financial Risk Intelligence 
 
 ##  Overview
 
