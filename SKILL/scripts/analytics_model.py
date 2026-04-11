@@ -184,6 +184,20 @@ def compute_risk_score(df: pd.DataFrame):
     # Anomaly signal
     if latest.get('anomaly_flag') == -1:
         risk += 20; drivers.append("Statistical anomaly detected")
+        
+    # M-score proxy (simple weighted signal)
+    m_score_signal = (
+    0.9 * latest['dsri'] +
+    0.5 * latest['gmi'] +
+    0.7 * latest['sgi'] +
+    1.2 * latest['tata']
+   )
+
+    if pd.notna(m_score_signal):
+        if m_score_signal > 2.5:
+            risk += 25; drivers.append("High earnings manipulation risk (M-score)")
+        elif m_score_signal > 1.5:
+            risk += 15; drivers.append("Moderate earnings manipulation risk")
 
     if not drivers:
         drivers.append("No major risk factors identified")
@@ -207,6 +221,7 @@ def validate_models(df: pd.DataFrame, risk_score: int) -> dict:
 
     rule_band    = "high" if risk_score >= 70 else ("medium" if risk_score >= 40 else "low")
     anomaly_band = "high" if anomaly_flag else "low"
+    m_score_band = "high" if m_score_signal > 2.5 else ("medium" if m_score_signal > 1.5 else "low")
     agreement    = rule_band == anomaly_band
 
     #  guard against NaN volatility
@@ -276,6 +291,7 @@ def main():
         # Risk scoring and validation on target only
         risk_score, drivers = compute_risk_score(df_target)
         validation          = validate_models(df_target, risk_score)
+        
 
         risk_level = "High" if risk_score >= 70 else ("Medium" if risk_score >= 40 else "Low")
         latest     = df_target.sort_values('ddate').iloc[-1]
@@ -290,6 +306,9 @@ def main():
                 "is_anomaly":    int(latest['anomaly_flag'] == -1),
                 "anomaly_score": float(latest['anomaly_score']),
             },
+            "m_score": {
+            "m_score": float(m_score_signal),
+            "m_score_risk": "High" if m_score_signal > 2.5 else ("Medium" if m_score_signal > 1.5 else "Low"),
             "validation": validation,
         }
 
