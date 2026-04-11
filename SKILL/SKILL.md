@@ -145,6 +145,17 @@ Compute:
 * liability_ratio = liabilities / assets
 * revenue_volatility = std(revenue.pct_change() over last 3 periods)
 * revenue_trend = mean(revenue.pct_change() over last 3 periods)
+## M-Score Features (Fraud Detection Layer)
+
+Computed per company (time-series aware):
+
+* Feature	Description
+* DSRI	Days Sales in Receivables Index
+* GMI	Gross Margin Index
+* SGI	Sales Growth Index
+* TATA	Total Accruals to Total Assets
+
+These features are used to detect earnings manipulation risk.
 
 ---
 
@@ -152,8 +163,32 @@ Compute:
 
 ### Models Used
 
-Model 1: Rule-Based Risk Scoring
-Model 2: Isolation Forest Anomaly Detection
+## Model 1: Rule-Based Risk Scoring
+
+### Evaluates:
+
+* Profitability
+* Growth
+* Leverage
+* Liquidity
+* Solvency
+* Earnings manipulation risk (M-score contribution)
+
+### M-Score Integration
+
+#### A composite M-score signal is computed:
+
+* M-score ≈ 0.9·DSRI + 0.5·GMI + 0.7·SGI + 1.2·TATA *
+
+## Risk contribution:
+
+High (>2.5) → +25 risk
+Moderate (>1.5) → +15 risk
+Low → no impact
+Model 2: Anomaly Detection
+Isolation Forest
+Trained on full dataset
+Detects statistical outliers
 
 ---
 Core Financial Features
@@ -238,10 +273,13 @@ Metrics:
 
 ### Decision Logic
 
-* Both high → Confirmed Risk
-* Rule only → Financial Risk
-* Anomaly only → Hidden Risk
-* None → Stable
+| Condition                    | Decision       |
+| ---------------------------- | -------------- |
+| Rule = High & Anomaly = High | Confirmed Risk |
+| Rule = High only             | Financial Risk |
+| Anomaly only                 | Hidden Risk    |
+| Neither                      | Stable         |
+
 
 ---
 
