@@ -1,5 +1,5 @@
 ---
-name:  SEC Financial Risk Intelligence with M-Score Integration
+name:  SEC Financial Risk Intelligence
 description: "Analyze company financial data to assess financial risk using feature engineering, anomaly detection, rule-based scoring, and multi-model validation. Produces structured outputs and a professional report."
 
 ---
