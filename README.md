@@ -73,83 +73,76 @@ The dataset contains financial information derived from SEC filings.
 
 ---
 
-##  Analytics Pipeline
+Analytics Pipeline
 
 The system follows a structured 6-stage workflow:
 
-### 1. Data Validation & Profiling
-
-* Checks schema, nulls, duplicates, data types
-* Outputs: `validation.json`
-
----
-
-### 2. Feature Engineering
+1. Data Validation & Profiling
+Checks schema, nulls, duplicates, data types
+Outputs: validation.json
+2. Feature Engineering
 
 Computed features:
 
-* Revenue growth
-* Profit margin
-* Debt-to-equity
-* Cash flow ratio
-* Liability ratio
-* Revenue volatility
-* Revenue trend
+Revenue growth
+Profit margin
+Debt-to-equity
+Cash flow ratio
+Liability ratio
+Revenue volatility
+Revenue trend
+M-Score Features (Fraud Detection Layer)
+DSRI – Days Sales in Receivables Index
+GMI – Gross Margin Index
+SGI – Sales Growth Index
+TATA – Total Accruals to Total Assets
 
----
+These features are used to detect earnings manipulation risk.
 
-### 3. Modelling
-
-#### Model 1: Rule-Based Risk Scoring
+3. Modelling
+Model 1: Rule-Based Risk Scoring
 
 Evaluates:
 
-* Profitability
-* Growth
-* Leverage
-* Liquidity
-* Solvency
-
-#### Model 2: Anomaly Detection
-
-* Isolation Forest
-* Detects unusual financial patterns
-
----
-
-### 4. Model Validation
+Profitability
+Growth
+Leverage
+Liquidity
+Solvency
+Earnings manipulation risk (M-score contribution)
+Model 2: Anomaly Detection
+Isolation Forest
+Detects unusual financial patterns
+4. Model Validation
 
 Compares models using:
 
-* Model agreement
-* Stability (volatility-based)
-* Anomaly strength
-
----
-
-### 5. Insight Generation
+Model agreement
+Stability (volatility-based)
+Anomaly strength
+Confidence score
+5. Insight Generation
 
 Produces:
 
-* Risk explanation
-* Business interpretation
-* Key drivers
-* Recommendations
-
----
-
-### 6. Report Generation
+Risk explanation
+Business interpretation
+Key drivers
+Recommendations
+M-score insights (earnings quality risk)
+6. Report Generation
 
 Generates a professional HTML report including:
 
-* Executive summary
-* Methodology
-* Data quality
-* Results with charts
-* Validation metrics
-* Business interpretation
-* Recommendations
-* Limitations
+Executive summary
+Methodology
+Data quality
+Financial trends (charts)
+Validation metrics
+Earnings manipulation risk (M-score section)
+Business interpretation
+Recommendations
+Limitations
 
 ---
 
