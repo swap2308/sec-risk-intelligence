@@ -59,8 +59,7 @@ def prepare_m_score_features(df: pd.DataFrame) -> pd.DataFrame:
     """
     Compute Beneish M-Score proxy indices.
 
-    FIX 1: SGI now uses df.groupby(...) instead of df['groupby'](...).
-    FIX 2: dropna() removed — NaNs are filled with per-column medians so
+
             no rows are silently lost before anomaly detection.
     """
     df = df.copy()
@@ -90,7 +89,7 @@ def prepare_m_score_features(df: pd.DataFrame) -> pd.DataFrame:
         median_val = df[col].replace([np.inf, -np.inf], np.nan).median()
         df[col] = df[col].replace([np.inf, -np.inf], np.nan).fillna(median_val)
 
-    return df          # ← no dropna(); all rows preserved
+    return df          #  no dropna(); all rows preserved
 
 
 # ─────────────────────────────────────────────────────────────
@@ -171,7 +170,7 @@ def compute_risk_score(df: pd.DataFrame):
     if pd.notna(cf) and cf < 0:
         risk += 25; drivers.append("Negative operating cash flow")
 
-    # Solvency  ← FIX 3: null-safe comparison
+    # Solvency  null-safe comparison
     liab  = latest.get('liabilities')
     assets = latest.get('assets')
     if pd.notna(liab) and pd.notna(assets) and liab > assets:
@@ -210,7 +209,7 @@ def validate_models(df: pd.DataFrame, risk_score: int) -> dict:
     anomaly_band = "high" if anomaly_flag else "low"
     agreement    = rule_band == anomaly_band
 
-    # FIX 4: guard against NaN volatility
+    #  guard against NaN volatility
     raw_vol  = df['revenue'].pct_change().std()
     vol      = raw_vol if pd.notna(raw_vol) else 0.0
     stability = float(max(0.0, 1.0 - vol))
@@ -234,8 +233,8 @@ def validate_models(df: pd.DataFrame, risk_score: int) -> dict:
         decision = "Stable"
 
     return {
-        "agreement":       agreement,       # flat bool  ← FIX 6 key alignment
-        "stability_score": stability,       # flat float ← FIX 6 key alignment
+        "agreement":       agreement,      
+        "stability_score": stability,     
         "anomaly_strength": strength,
         "confidence_score": confidence,
         "rule_band":        rule_band,
@@ -258,7 +257,7 @@ def main():
         df_raw = pd.read_csv(args.input_data)
         df_raw['ddate'] = pd.to_datetime(df_raw['ddate'])
 
-        # FIX 5: filter BEFORE feature engineering so the risk model scores
+        # filter BEFORE feature engineering so the risk model scores
         #         only the target company, not whatever row happens to be last.
         df_target_raw = df_raw[df_raw['cik'] == args.cik].copy()
         if df_target_raw.empty:
