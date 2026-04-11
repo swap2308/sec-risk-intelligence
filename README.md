@@ -40,9 +40,11 @@ sec-risk-intelligence/
 │   ├── validation.json
 │   ├── model_output.json
 │   ├── report.html
-│   ├── revenue.png
-│   └── net_income.png
-│
+│── Documents/
+│   ├── Design_Document.docx
+│   ├── Execution Evidence.dox
+│   ├── Evaluation Report.dox
+│  
 ├── SKILL.md
 ├── REFERENCE.md
 └── README.md
