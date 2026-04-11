@@ -48,7 +48,7 @@ def generate_report(
     output_path: str = "outputs/report.html",
 ) -> str:
     """
-    FIX 6: All validation values accessed with single-level keys, matching
+     All validation values accessed with single-level keys, matching
     the flat dict returned by validate_models():
         validation['agreement']        (bool)
         validation['stability_score']  (float)
@@ -105,6 +105,8 @@ def generate_report(
     <tr><th>Risk Level</th><td>{insights.get('risk_level', 'N/A')}</td></tr>
     <tr><th>Decision</th><td>{decision_val}</td></tr>
     <tr><th>Confidence</th><td>{confidence_val}%</td></tr>
+    <tr><th>M-Score</th><td>{insights.get('m_score', {}).get('value', 'N/A')}</td></tr>
+    <tr><th>Manipulation Risk</th><td>{insights.get('m_score', {}).get('risk_level', 'N/A')}</td></tr>
   </table>
 </div>
 
@@ -145,6 +147,22 @@ def generate_report(
     <tr><th>Anomaly Strength</th><td>{strength_val}</td></tr>
     <tr><th>Confidence Score</th><td>{confidence_val}%</td></tr>
   </table>
+</div>
+# -----------------------------
+# M-Score Section
+# -----------------------------
+m_score_val  = insights.get('m_score', {}).get('value', 'N/A')
+m_score_risk = insights.get('m_score', {}).get('risk_level', 'N/A')
+<div class="card">
+  <h2>Earnings Manipulation Risk (M-Score)</h2>
+  <table>
+    <tr><th>M-Score</th><td>{m_score_val}</td></tr>
+    <tr><th>Risk Level</th><td>{m_score_risk}</td></tr>
+  </table>
+  <p>
+    M-Score is a forensic accounting metric used to detect potential earnings manipulation.
+    Higher values indicate increased likelihood of aggressive accounting practices.
+  </p>
 </div>
 
 <!-- Business Interpretation -->
