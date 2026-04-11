@@ -65,6 +65,8 @@ The dataset contains financial information derived from SEC filings.
 * debt
 * equity
 * cash_flow
+* receivables
+* cogs
 * name
 
 ---
