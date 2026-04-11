@@ -1,1 +1,4 @@
+High-risk company — distressed financials
+Prompt used
+Run a risk assessment on CIK 8812 (REDSTONE ENERGY) using the default dataset. Use defaults for lookback (3 periods) and risk threshold (70). I want to understand why this company is flagged as risky and what the models agree on.
 
